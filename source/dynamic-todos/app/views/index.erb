@@ -1,9 +1,9 @@
 <div id="todo">
   <div class="toolbox">
     <form action="/add_todo" method="post">
-      <input type="text" class="todo" value="Put your todo item here!"/>
-      <input type="submit" value="Add Todo"/>
-      <!-- <button class="add" type="submit">Add Todo</button> -->
+      <input type="text" class="todo" value="Put your todo item here!" name="new_content"/> <!-- ADD NAME -->
+      <!-- <input type="submit" value="Add Todo"/> -->
+      <button class="add" type="submit">Add Todo</button>
     </form>
   </div>
 
@@ -11,7 +11,7 @@
 
   </div>
 
-  <div id="todo_template" style="display: none;">
+  <div id="todo_template" style="display: none;"> <!--hides div-->
     <div class="todo">
       <h2>Todo Name</h2>
       <ul>
