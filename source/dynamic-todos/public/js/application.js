@@ -6,15 +6,8 @@ $(document).ready(function() {
     // elements
 
     $('form').on('submit', addTodo)
-    // {
-    //   event.preventDefault();
-    //   console.log(event.target) // => <form action="/" method="post">
-    //   addData = $(this);
-    //   console.log(addData);
-    // })
-
-    $('todo_template').on('click', '.complete', completeTodo)
-    $('todo_template').on('click', '.delete', deleteTodo)
+    $('.todo_list').on('click', '.complete', completeTodo)
+    $('.todo_list').on('click', '.delete', deleteTodo)
 
 
   }
@@ -34,28 +27,58 @@ $(document).ready(function() {
 
   function addTodo(event) {
     event.preventDefault();
+    var addData = $('.todo')
+    //debugger
 
     $.ajax({
       type: 'POST',
-      data: $(this),
+      data: addData,
       url: '/add_todo',
       success: function(data){
-        //onsole.log(data)
         console.log(buildTodo(data))
         $('.todo_list').append(buildTodo(data))
 
       }
 
     })
-    event
+    //event
 
   }
 
-  function completeTodo() {
+  function completeTodo(event) {
+    event.preventDefault();
+    var completeDiv = $(this).parents('.todo')
+    var completeText = $(this).parents('ul').siblings('h2').text()
+    var completeLink = $(this)
 
+    $.ajax({
+      type: 'PUT',
+      data: { content: completeText },
+      //json hash for route, sending triggered todo tasks content
+      url: '/complete',
+      success: function(){
+        $(completeDiv).addClass('complete');
+        completeLink.remove()
+      }
+
+    })
   }
 
-  function deleteTodo() {
+  function deleteTodo(event) {
+    event.preventDefault();
+    var divToDelete = $(this).parents('.todo')
+    var deleteData = $(this).parents('ul').siblings('h2').text()
+    console.log($(this).text());
+
+    $.ajax({
+      type: 'DELETE',
+      data: { content: deleteData },
+      url: '/delete',
+      success: function(data){
+        $(divToDelete).remove();
+      }
+
+    })
 
   }
 
